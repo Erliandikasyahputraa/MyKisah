@@ -1,6 +1,6 @@
 import NewPresenter from './new-presenter';
 import { convertBase64ToBlob } from '../../utils';
-import * as CeritaKuyAPI from '../../data/api';
+import * as MyKisahAPI from '../../data/api';
 import { generateLoaderAbsoluteTemplate } from '../../templates';
 import Camera from '../../utils/camera';
 import Map from '../../utils/map';
@@ -111,7 +111,7 @@ export default class NewPage {
     
     this.#presenter = new NewPresenter({
       view: this,
-      model: CeritaKuyAPI,
+      model: MyKisahAPI,
     });
   
     await this.#presenter.showNewFormMap(); // Render map after form setup

@@ -1,5 +1,5 @@
 import LoginPresenter from './login-presenter';
-import * as CeritaKuyAPI from '../../../data/api';
+import * as MyKisahAPI from '../../../data/api';
 import * as AuthModel from '../../../utils/auth';
 
 export default class LoginPage {
@@ -9,7 +9,7 @@ export default class LoginPage {
     return `
       <section class="login-container">
         <article class="login-form-container">
-          <h1 class="login__title">Login</h1>
+          <h1 class="login__title">Masuk</h1>
 
           <form id="login-form" class="login-form">
             <div class="form-control">
@@ -28,9 +28,9 @@ export default class LoginPage {
             </div>
             <div class="form-buttons login-form__form-buttons">
               <div id="submit-button-container">
-                <button class="btn" type="submit">Login</button>
+                <button class="btn" type="submit">Masuk</button>
               </div>
-              <p class="login-form__do-not-have-account">Belum punya akun? <a href="#/register"><b>Register</b></a></p>
+              <p class="login-form__do-not-have-account">Belum punya akun? <a href="#/register"><b>Daftar</b></a></p>
             </div>
           </form>
         </article>
@@ -41,7 +41,7 @@ export default class LoginPage {
   async afterRender() {
     this.#presenter = new LoginPresenter({
       view: this,
-      model: CeritaKuyAPI,
+      model: MyKisahAPI,
       authModel: AuthModel,
     });
 

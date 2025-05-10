@@ -4,44 +4,50 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Cerita Kuy!</title>
+    <title>MyKisah</title>
 
+    <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="favicon.png" />
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com " />
+    <link rel="preconnect" href="https://fonts.gstatic.com " crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=Inter :wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
     />
 
-    <!-- Font Awesome 5.15.4 -->
+    <!-- Font Awesome Icons -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css "
       integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
   </head>
+
   <body>
     <header>
-      <button id="skip-link" class="skip-link">Menuju konten utama</button>
-
       <div class="header-content container">
+        <!-- Tombol Skip Link - Tetap di awal agar ikut flex layout -->
+        <button id="skip-link" class="skip-link">Menuju konten utama</button>
+
+        <!-- Logo & Brand Name -->
         <a class="brand-name__link" href="#/login">
-          <img class="brand-name__link__image" src="images/logo.png" alt="CeritaKuy Logo" />
-          <span class="brand-name__link__text">Cerita Kuy!</span>
+          <img class="brand-name__link__image" src="images/logo.png" alt="MyKisah Logo" />
+          <span class="brand-name__link__text">MyKisah</span>
         </a>
 
+        <!-- Tombol Menu Drawer -->
+        <button id="drawer-button" class="drawer-button">☰</button>
+
+        <!-- Navigation Drawer -->
         <nav id="navigation-drawer" class="navigation-drawer">
           <ul id="navlist-main" class="navigation-drawer__navlist-main"></ul>
           <ul id="navlist" class="navigation-drawer__navlist"></ul>
         </nav>
-
-        <button id="drawer-button" class="drawer-button">☰</button>
       </div>
     </header>
 
@@ -51,10 +57,10 @@
       <div class="container">
         <div class="footer-content">
           <a class="brand-name__link" href="#/">
-            <img class="brand-name__link__image" src="images/logo.png" alt="CeritaKuy Logo" />
-            <span class="brand-name__link__text">Cerita Kuy!</span>
+            <img class="brand-name__link__image" src="images/logo.png" alt="MyKisah Logo" />
+            <span class="brand-name__link__text">MyKisah</span>
           </a>
-          <p class="copyright">&copy; 2025 Harmade. All rights reserved. <em>Modified by Harmade.</em></p>
+          <p class="copyright">&copy; 2025 MyKisah. All rights reserved. <em>Developed by Erliandika Syahputra.</em></p>
         </div>
       </div>
     </footer>

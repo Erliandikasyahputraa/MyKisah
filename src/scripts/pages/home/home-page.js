@@ -6,7 +6,7 @@ import {
 } from '../../templates';
 import HomePresenter from './home-presenter';
 import Map from '../../utils/map';
-import * as CeritaKuyAPI from '../../data/api';
+import * as MyKisahApi from '../../data/api';
 
 export default class HomePage {
   #presenter = null;
@@ -33,11 +33,11 @@ export default class HomePage {
   }
 
   async afterRender() {
-    await this.initialMap(); // ← panggil inisialisasi map dulu
+    await this.initialMap(); 
   
     this.#presenter = new HomePresenter({
       view: this,
-      model: CeritaKuyAPI,
+      model: MyKisahApi,
     });
   
     await this.#presenter.initialGalleryAndMap();
@@ -50,14 +50,25 @@ export default class HomePage {
     }
   
     const html = stories.reduce((accumulator, story) => {
-      // Periksa apakah story memiliki data lokasi (lat, lon)
+      if (!story.photoUrl) {
+        console.error('Data foto hilang untuk story:', story);
+        return accumulator;
+      }
+      if (!story.name) {
+        console.error('Data nama hilang untuk story:', story);
+        return accumulator;
+      }
+      if (!story.description) {
+        console.error('Data deskripsi hilang untuk story:', story);
+        return accumulator;
+      } 
       if (story.lat && story.lon) {
         const coordinate = [story.lat, story.lon];
-        // Menambahkan marker dengan popup berisi title atau deskripsi story
+
         this.#map.addMarker(coordinate, { alt: story.title }, { content: `<strong>${story.name}</strong><br>${story.description}` });
       } else {
         console.error('Data lokasi hilang untuk story:', story);
-        const defaultCoordinate = [0, 0];  // Lokasi default jika tidak ada
+        const defaultCoordinate = [0, 0];  
         this.#map.addMarker(defaultCoordinate, { alt: 'Tidak ada lokasi' }, { content: 'Tidak ada lokasi' });
       }      
   
@@ -68,7 +79,7 @@ export default class HomePage {
           description: story.description,
           evidenceImages: [story.photoUrl],
           createdAt: story.createdAt,
-          location: { lat: story.lat, lon: story.lon } || { lat: null, lon: null }, // Menangani story yang tidak memiliki lokasi
+          location: { lat: story.lat, lon: story.lon } || { lat: null, lon: null },
         })
       );
     }, '');

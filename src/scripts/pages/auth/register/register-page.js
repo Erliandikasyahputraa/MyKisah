@@ -1,5 +1,5 @@
 import RegisterPresenter from './register-presenter';
-import * as CeritaKuyAPI from '../../../data/api';
+import * as MyKisahAPI from '../../../data/api';
 
 export default class RegisterPage {
   #presenter = null;
@@ -8,11 +8,11 @@ export default class RegisterPage {
     return `
       <section class="register-container">
         <div class="register-form-container">
-          <h1 class="register__title">Daftar akun</h1>
+          <h1 class="register__title">Daftar Akun dulu gasie</h1>
 
           <form id="register-form" class="register-form">
             <div class="form-control">
-              <label for="name-input" class="register-form__name-title">Nama lengkap <span style="color: red">*</span></label>
+              <label for="name-input" class="register-form__name-title">Nama Lengkap <span style="color: red">*</span></label>
 
               <div class="register-form__title-container">
                 <input id="name-input" type="text" name="name" placeholder="Masukkan nama lengkap Anda">
@@ -34,9 +34,9 @@ export default class RegisterPage {
             </div>
             <div class="form-buttons register-form__form-buttons">
               <div id="submit-button-container">
-                <button class="btn" type="submit">Daftar akun</button>
+                <button class="btn" type="submit">Daftar Akun</button>
               </div>
-              <p class="register-form__already-have-account">Sudah punya akun? <a href="#/login">Login<b></b></a></p>
+              <p class="register-form__already-have-account">Sudah punya akun? <a href="#/login">Masuk</a></p>
             </div>
           </form>
         </div>
@@ -47,7 +47,7 @@ export default class RegisterPage {
   async afterRender() {
     this.#presenter = new RegisterPresenter({
       view: this,
-      model: CeritaKuyAPI,
+      model: MyKisahAPI,
     });
 
     this.#setupForm();
@@ -80,14 +80,14 @@ export default class RegisterPage {
   showSubmitLoadingButton() {
     document.getElementById('submit-button-container').innerHTML = `
       <button class="btn" type="submit" disabled>
-        <i class="fas fa-spinner loader-button"></i> Daftar akun
+        <i class="fas fa-spinner loader-button"></i> Daftar Akun
       </button>
     `;
   }
 
   hideSubmitLoadingButton() {
     document.getElementById('submit-button-container').innerHTML = `
-      <button class="btn" type="submit">Daftar akun</button>
+      <button class="btn" type="submit">Daftar Akun</button>
     `;
   }
 }
