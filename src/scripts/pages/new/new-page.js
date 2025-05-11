@@ -235,18 +235,40 @@ export default class NewPage {
   }
 
   async #populateTakenPictures() {
-    const html = this.#takenDocumentations.reduce((accumulator, picture, currentIndex) => {
-      const imageUrl = URL.createObjectURL(picture.blob);
-      return accumulator.concat(`
+    const outputsList = document.getElementById('documentations-taken-list');
+  
+    // Jika tidak ada gambar
+    if (this.#takenDocumentations.length === 0) {
+      outputsList.innerHTML = `
         <li class="new-form__documentations__outputs-item">
-          <button type="button" data-deletepictureid="${picture.id}" class="new-form__documentations__outputs-item__delete-btn">
-            <img src="${imageUrl}" alt="Dokumentasi ke-${currentIndex + 1}">
-          </button>
+          <p class="new-form__documentations__outputs-item__empty">Tidak ada gambar yang diambil</p>
         </li>
-      `);
+      `;
+      return;
+    }
+  
+    // Siapkan HTML untuk preview gambar
+    const html = this.#takenDocumentations.reduce((acc, picture, index) => {
+      const imageUrl = URL.createObjectURL(picture.blob);
+      return acc + `
+        <li class="new-form__documentations__outputs-item">
+          <div class="new-form__documentations__outputs-item__container">
+            <img src="${imageUrl}" alt="Dokumentasi ke-${index + 1}" class="new-form__documentations__outputs-item__image">
+            <button 
+              type="button" 
+              data-deletepictureid="${picture.id}" 
+              class="new-form__documentations__outputs-item__delete-btn">
+              &times;
+            </button>
+          </div>
+        </li>
+      `;
     }, '');
-    document.getElementById('documentations-taken-list').innerHTML = html;
-
+  
+    // Masukkan HTML ke DOM
+    outputsList.innerHTML = html;
+  
+    // Tambahkan event listener untuk tombol hapus
     document.querySelectorAll('button[data-deletepictureid]').forEach((button) =>
       button.addEventListener('click', (event) => {
         const pictureId = event.currentTarget.dataset.deletepictureid;
@@ -255,6 +277,14 @@ export default class NewPage {
         }
       })
     );
+  
+    // Tambahkan animasi fade-in ke semua gambar baru
+    document.querySelectorAll('.new-form__documentations__outputs-item').forEach((item, index) => {
+      if (!item.classList.contains('animated')) {
+        item.classList.add('animated');
+        item.style.animationDelay = `${index * 0.1}s`;
+      }
+    });
   }
 
   #removePicture(id) {

@@ -74,18 +74,19 @@ export default class App {
         text: 'Anda akan logout dari akun ini.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#00ffe0', // biru kehijauan neon
-        cancelButtonColor: '#ff0055',  // merah neon
+        confirmButtonColor: '#3a3a5a', // Biru tua
+        cancelButtonColor: '#5d5d7d', // Abu-abu gelap
         confirmButtonText: '🚪 Ya, Logout',
         cancelButtonText: 'Batal',
-        background: '#121212', // hitam pekat atau dark grey
-        color: '#fefefe', // teks putih terang
+        background: '#0b0c10', // Hitam pekat
+        color: '#f9fafb', // Teks putih terang
         customClass: {
           popup: 'neo-dark-popup',
           title: 'neo-dark-title',
           confirmButton: 'neo-dark-button-confirm',
           cancelButton: 'neo-dark-button-cancel',
-        }
+        },
+        buttonsStyling: false, // Penting agar customClass diterapkan
       
       }).then((result) => {
         if (result.isConfirmed) {

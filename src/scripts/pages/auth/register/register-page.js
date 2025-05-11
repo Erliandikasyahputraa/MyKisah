@@ -13,21 +13,18 @@ export default class RegisterPage {
           <form id="register-form" class="register-form">
             <div class="form-control">
               <label for="name-input" class="register-form__name-title">Nama Lengkap <span style="color: red">*</span></label>
-
               <div class="register-form__title-container">
                 <input id="name-input" type="text" name="name" placeholder="Masukkan nama lengkap Anda">
               </div>
             </div>
             <div class="form-control">
               <label for="email-input" class="register-form__email-title">Email <span style="color: red">*</span></label>
-
               <div class="register-form__title-container">
                 <input id="email-input" type="email" name="email" placeholder="Contoh: nama@example.com">
               </div>
             </div>
             <div class="form-control">
               <label for="password-input" class="register-form__password-title">Password <span style="color: red">*</span></label>
-
               <div class="register-form__title-container">
                 <input id="password-input" type="password" name="password" placeholder="Masukkan password baru">
               </div>
@@ -62,19 +59,19 @@ export default class RegisterPage {
         email: document.getElementById('email-input').value,
         password: document.getElementById('password-input').value,
       };
+
       await this.#presenter.getRegistered(data);
     });
   }
 
-  registeredSuccessfully(message) {
-    console.log(message);
-
-    // Redirect
-    location.hash = '/login';
+  // ✅ GANTI NAMA METHOD INI SESUAI DENGAN YANG DIHARAPKAN PRESENTER
+  registerFailed(message) {
+    alert(message);
   }
 
-  registeredFailed(message) {
-    alert(message);
+  registeredSuccessfully(message) {
+    console.log(message);
+    location.hash = '/login';
   }
 
   showSubmitLoadingButton() {

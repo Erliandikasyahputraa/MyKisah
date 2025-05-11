@@ -524,7 +524,7 @@ form .form-buttons {
   gap: 8px;
 }
 .story-item__description {
-  -webkit-line-clamp: 4;
+  /* -webkit-line-clamp: 4; */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -587,14 +587,88 @@ form .form-buttons {
   flex-direction: column;
   gap: 8px 16px;
 }
+/* Preview Gambar Brutalist */
 .new-form__documentations__outputs {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(1, minmax(200px, 1fr));
-  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Memulai baris baru jika tidak muat */
   gap: 16px;
+  margin-top: 16px;
+  padding: 0;
+  width: 100%;
 }
 
+.new-form__documentations__outputs-item {
+  position: relative;
+  border: 4px solid var(--border-color);
+  box-shadow: 6px 6px 0 var(--border-color);
+  border-radius: 0;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+  transform: scale(0.95);
+  margin-bottom: 20px; /* Spasi antara baris */
+  background-color: #1a1b26;
+}
+
+.new-form__documentations__outputs-item.animated {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.new-form__documentations__outputs-item__container {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Tinggi tetap untuk semua gambar */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.new-form__documentations__outputs-item__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Tombol Hapus di Pojok */
+.new-form__documentations__outputs-item__delete-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  box-shadow: 2px 2px 0 var(--border-color);
+  background-color: #ff3f3f;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0;
+  z-index: 10;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.new-form__documentations__outputs-item__delete-btn:hover {
+  transform: scale(1.1);
+  background-color: #ff5e5e;
+}
+
+/* Animasi Fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 /* New Locations */
 .new-form__location__map__container,
 .new-form__location__map {
@@ -700,13 +774,6 @@ form .form-buttons {
   gap: 20px;
 }
 
-/* New Documentations */
-.new-form__documentations__outputs-item__delete-btn img {
-  transition: 150ms ease-in-out;
-}
-.new-form__documentations__outputs-item__delete-btn:hover img {
-  scale: 1.05;
-}
 
 /* FOOTER */
 footer {
