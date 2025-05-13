@@ -26,7 +26,7 @@ export default class Camera {
     }
 
     window.currentStreams.forEach((stream) => {
-      if (stream.active) {
+      if (stream && stream.active) { // Tambahkan pengecekan stream tidak null
         stream.getTracks().forEach((track) => track.stop());
       }
     });

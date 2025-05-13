@@ -33,6 +33,9 @@ export default class HomePage {
   }
 
   async afterRender() {
+    // Pastikan DOM sudah dirender sepenuhnya
+    await new Promise(resolve => setTimeout(resolve, 0));
+    
     await this.initialMap(); 
   
     this.#presenter = new HomePresenter({
@@ -84,18 +87,34 @@ export default class HomePage {
       );
     }, '');
   
-    document.getElementById('stories-list').innerHTML = `
+    const storiesListElement = document.getElementById('stories-list');
+    if (!storiesListElement) {
+      console.error('Element with id "stories-list" not found');
+      return;
+    }
+  
+    storiesListElement.innerHTML = `
       <div class="stories-list">${html}</div>
     `;
   }
   
   
   populateStoriesListEmpty() {
-    document.getElementById('stories-list').innerHTML = generateStoriesListEmptyTemplate();
+    const storiesListElement = document.getElementById('stories-list');
+    if (!storiesListElement) {
+      console.error('Element with id "stories-list" not found');
+      return;
+    }
+    storiesListElement.innerHTML = generateStoriesListEmptyTemplate();
   }
 
   populateStoriesListError(message) {
-    document.getElementById('stories-list').innerHTML = generateStoriesListErrorTemplate(message);
+    const storiesListElement = document.getElementById('stories-list');
+    if (!storiesListElement) {
+      console.error('Element with id "stories-list" not found');
+      return;
+    }
+    storiesListElement.innerHTML = generateStoriesListErrorTemplate(message);
   }
 
   async initialMap() {
@@ -118,7 +137,13 @@ export default class HomePage {
       generateLoaderAbsoluteTemplate();
   }
 
+  // Dan juga pada fungsi hideLoading
   hideLoading() {
-    document.getElementById('stories-list-loading-container').innerHTML = '';
+    const loadingContainer = document.getElementById('stories-list-loading-container');
+    if (loadingContainer) {
+      loadingContainer.innerHTML = '';
+    } else {
+      console.error('Element with id "stories-list-loading-container" not found');
+    }
   }
 }

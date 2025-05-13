@@ -194,14 +194,27 @@ export default class NewPage {
   #toggleCamera(event, cameraContainer) {
     cameraContainer.classList.toggle('open');
     this.#isCameraOpen = cameraContainer.classList.contains('open');
-
+  
     if (this.#isCameraOpen) {
       event.currentTarget.textContent = 'Tutup Kamera';
       this.#setupCamera();
-      this.#camera.launch();
+      
+      // Tambahkan indikator loading
+      const videoElement = document.getElementById('camera-video');
+      videoElement.innerHTML = '<div class="loader"></div><p>Memuat kamera...</p>';
+      
+      // Launch kamera dengan timeout
+      this.#camera.launch()
+        .then(() => {
+          console.log('Kamera berhasil dimuat');
+        })
+        .catch(error => {
+          console.error('Error saat memuat kamera:', error);
+          videoElement.innerHTML = '<p>Gagal memuat kamera. Pastikan Anda memberikan izin akses kamera.</p>';
+        });
       return;
     }
-
+  
     event.currentTarget.textContent = 'Buka Kamera';
     this.#camera.stop();
   }
@@ -224,14 +237,32 @@ export default class NewPage {
   }
 
   async #addTakenPicture(image) {
-    let blob = image instanceof String ? await convertBase64ToBlob(image, 'image/png') : image;
-
-    const newDocumentation = {
-      id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-      blob,
-    };
-
-    this.#takenDocumentations = [...this.#takenDocumentations, newDocumentation];
+    if (!image) {
+      console.error('Gambar tidak valid');
+      return;
+    }
+    
+    let blob;
+    try {
+      // Periksa tipe data image
+      if (typeof image === 'string') {
+        blob = await convertBase64ToBlob(image, 'image/png');
+      } else if (image instanceof Blob) {
+        blob = image;
+      } else {
+        console.error('Format gambar tidak didukung:', typeof image);
+        return;
+      }
+      
+      const newDocumentation = {
+        id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+        blob,
+      };
+  
+      this.#takenDocumentations = [...this.#takenDocumentations, newDocumentation];
+    } catch (error) {
+      console.error('Error saat memproses gambar:', error);
+    }
   }
 
   async #populateTakenPictures() {
@@ -249,6 +280,12 @@ export default class NewPage {
   
     // Siapkan HTML untuk preview gambar
     const html = this.#takenDocumentations.reduce((acc, picture, index) => {
+      // Periksa apakah blob valid sebelum membuat URL
+      if (!picture.blob || !(picture.blob instanceof Blob)) {
+        console.error('Invalid blob for picture:', picture);
+        return acc; // Skip item ini jika blob tidak valid
+      }
+      
       const imageUrl = URL.createObjectURL(picture.blob);
       return acc + `
         <li class="new-form__documentations__outputs-item">
@@ -267,7 +304,7 @@ export default class NewPage {
   
     // Masukkan HTML ke DOM
     outputsList.innerHTML = html;
-  
+    
     // Tambahkan event listener untuk tombol hapus
     document.querySelectorAll('button[data-deletepictureid]').forEach((button) =>
       button.addEventListener('click', (event) => {
