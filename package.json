@@ -4,6 +4,7 @@
   "description": "A simple web application for sharing and publishing your personal stories.",
   "scripts": {
     "build": "webpack --config ./webpack.prod.js",
+    "dev": "webpack serve --config ./webpack.dev.js",
     "start-dev": "webpack serve --config ./webpack.dev.js",
     "serve": "http-server ./dist --port 3000",
     "prettier": "prettier . --check",
