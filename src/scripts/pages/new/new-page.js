@@ -335,6 +335,11 @@ export default class NewPage {
   storeSuccessfully(message) {
     console.log(message);
     this.clearForm();
+    
+    // Tambahkan event untuk trigger refresh
+    const refreshEvent = new CustomEvent('story-uploaded');
+    window.dispatchEvent(refreshEvent);
+    
     location.hash = '/';
   }
 

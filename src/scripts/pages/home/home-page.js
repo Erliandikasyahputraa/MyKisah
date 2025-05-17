@@ -22,7 +22,12 @@ export default class HomePage {
       </section>
 
       <section class="container">
-        <h1 class="section-title">Daftar Cerita</h1>
+        <div class="stories-header">
+          <h1 class="section-title">Daftar Cerita</h1>
+          <button id="refresh-stories" class="btn btn-outline">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+        </div>
 
         <div class="stories-list__container">
           <div id="stories-list"></div>
@@ -33,7 +38,6 @@ export default class HomePage {
   }
 
   async afterRender() {
-    // Pastikan DOM sudah dirender sepenuhnya
     await new Promise(resolve => setTimeout(resolve, 0));
     
     await this.initialMap(); 
@@ -43,7 +47,26 @@ export default class HomePage {
       model: MyKisahApi,
     });
   
+    // Setup refresh button
+    const refreshButton = document.getElementById('refresh-stories');
+    if (refreshButton) {
+      refreshButton.addEventListener('click', async () => {
+        refreshButton.disabled = true;
+        try {
+          await this.#presenter.refreshStories();
+        } finally {
+          refreshButton.disabled = false;
+        }
+      });
+    }
+
+    // Auto refresh setiap kali halaman dimuat
     await this.#presenter.initialGalleryAndMap();
+
+    // Setup auto refresh setiap 30 detik
+    setInterval(() => {
+      this.#presenter.refreshStories();
+    }, 30000);
   }
 
   async populateStoriesList(message, stories) {
@@ -125,19 +148,32 @@ export default class HomePage {
   }
 
   showMapLoading() {
-    document.getElementById('map-loading-container').innerHTML = generateLoaderAbsoluteTemplate();
+    const mapLoadingContainer = document.getElementById('map-loading-container');
+    if (mapLoadingContainer) {
+      mapLoadingContainer.innerHTML = generateLoaderAbsoluteTemplate();
+    } else {
+      console.error('Element with id "map-loading-container" not found');
+    }
   }
 
   hideMapLoading() {
-    document.getElementById('map-loading-container').innerHTML = '';
+    const mapLoadingContainer = document.getElementById('map-loading-container');
+    if (mapLoadingContainer) {
+      mapLoadingContainer.innerHTML = '';
+    } else {
+      console.error('Element with id "map-loading-container" not found');
+    }
   }
 
   showLoading() {
-    document.getElementById('stories-list-loading-container').innerHTML =
-      generateLoaderAbsoluteTemplate();
+    const loadingContainer = document.getElementById('stories-list-loading-container');
+    if (loadingContainer) {
+      loadingContainer.innerHTML = generateLoaderAbsoluteTemplate();
+    } else {
+      console.error('Element with id "stories-list-loading-container" not found');
+    }
   }
 
-  // Dan juga pada fungsi hideLoading
   hideLoading() {
     const loadingContainer = document.getElementById('stories-list-loading-container');
     if (loadingContainer) {

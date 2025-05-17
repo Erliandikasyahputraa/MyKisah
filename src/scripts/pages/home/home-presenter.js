@@ -10,7 +10,8 @@ export default class HomePresenter {
   async initialGalleryAndMap() {
     this.#view.showLoading();
     try {
-      const response = await this.#model.getAllStories();
+      // Force refresh dari server, skip cache
+      const response = await this.#model.getAllStories(true);
 
       if (!response.ok) {
         console.error('initialGalleryAndMap: response:', response);
@@ -25,5 +26,10 @@ export default class HomePresenter {
     } finally {
       this.#view.hideLoading();
     }
-  }  
+  }
+
+  // Tambah method untuk refresh manual
+  async refreshStories() {
+    return this.initialGalleryAndMap();
+  }
 }
